@@ -8,7 +8,7 @@ Synopsis
 * `Physical principles`_
 * `x86 timers and counters`_
 * `OS interfaces`_
-* `Picking a right timer for benchmarks`
+* `Picking a right timer for benchmarks`_
 
 
 Physical principles
@@ -281,10 +281,10 @@ Acheiving microsecond accuracy
 
 * Also avoid using ``rdtscp`` due to a high overhead
 
-* Use the ``CLOCK_MONOTONIC_RAW`` clock. Linux picks TSC as a source
+* Use the ``CLOCK_MONOTONIC`` clock. Linux picks TSC as a source
   if TSC is good enough
 
-* ``clock_gettime(CLOCK_MONOTONIC_RAW, ...)`` does **NOT** involve
+* ``clock_gettime(CLOCK_MONOTONIC, ...)`` does **NOT** involve
   a system call when kernel picks TSC as a time source
 
 
