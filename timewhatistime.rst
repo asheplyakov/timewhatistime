@@ -125,6 +125,21 @@ driven by memory interconnect bus, such as QPI or HyperTransport). However
 OS interfaces
 =============
 
+Linux: clocksource
+------------------
+
+During the boot the kernel detects available timekeeping devices and selects
+the best one to use. On x86 the preferred clock source is the TSC, if it is
+not available (or not reliable) the HPET is the 2nd best option.
+
+.. code:: bash
+
+   $ cat /sys/devices/system/clocksource/clocksource0/current_clocksource
+   tsc
+   $ cat /sys/devices/system/clocksource/clocksource0/available_clocksource
+   tsc hpet acpi_pm
+
+
 C API
 ------
 
@@ -303,3 +318,52 @@ Acheiving microsecond accuracy
   a system call when kernel picks TSC as a time source
 
 
+Clock sanity checklist
+~~~~~~~~~~~~~~~~~~~~~~
+
+#. Verify that current clocksource is TSC
+
+   .. code:: bash
+      $ cat /sys/devices/system/clocksource/clocksource0/current_clocksource
+      tsc
+
+#. Check if the kernel indicates the following flags in `/proc/cpuinfo`
+
+   - `constant_tsc`
+   - `tsc_known_freq`
+   - `nonstop_tsc`
+
+#. Check if ``clock_gettime(CLOCK_MONOTONIC, ..)`` does **NOT** make system calls.
+   Compile the following program and run it with `strace`_
+
+   .. code:: c
+
+      #define _GNU_SOURCE
+      #include <time.h>
+      #include <stdlib.h>
+
+      int main(int argc, char** argv) {
+          struct timespec ts;
+          for (int i = 0; i < 1000000; i++) {
+              asm volatile("": : :"memory");
+              if (clock_gettime(CLOCK_MONOTONIC, &ts) < 0) {
+                  exit(1);
+              }
+          }
+          return 0;
+      }
+
+   .. code:: bash
+
+      $ gcc -std=gnu99 -O2 -g -Wall -o clocksanity clocksanity.c
+      $ strace -e clock_gettime ./clocksanity
+        +++ exited with 0 +++
+
+    If `strace` prints lots of lines like::
+
+      clock_gettime(CLOCK_MONOTONIC, {tv_sec=1775767, tv_nsec=426776012}) = 0
+
+    than `clock_gettime` is a system call (and thus the overhead of timing
+    is way too high and timing itself might become a bottleneck)
+
+.. _strace: http://man7.org/linux/man-pages/man1/strace.1.html
