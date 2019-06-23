@@ -8,6 +8,7 @@ Synopsis
 * `Physical principles`_
 * `x86 timers and counters`_
 * `OS interfaces`_
+* `C++: std::chrono`_
 * `Picking a right timer for benchmarks`_
 
 
@@ -64,7 +65,8 @@ Each counter can operate in one of six modes
 * device communicates the event via an interrupt
 * the device might be in use by the OS scheduler
 
----
+
+----
 
 APIC timer
 ----------
@@ -121,6 +123,7 @@ driven by memory interconnect bus, such as QPI or HyperTransport). However
 * `rdtsc` can be executed speculatively just like any other instruction
 
 ----
+
 
 OS interfaces
 =============
@@ -233,8 +236,8 @@ To find out the clock resolution use
    }
 
 
-C++ APIs
---------
+C++: std::chrono
+----------------
 
 * `std::chrono::system_clock` -- system wall clock
 * `std::chrono::steady_clock` -- monotonic clock, constant interval between ticks
