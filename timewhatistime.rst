@@ -26,7 +26,7 @@ Mechanical resonance of a vibrating crystal of `piezoelectric`_ material
 x86 timers and counters
 =======================
 
-* Real Time Clock (RTC), keeps the date and time, 1 second precision
+* Real Time Clock (`RTC`_), precision = 1 second
 * `8254 PIT`_ (programmable interval timer), frequency 105/88 = 1.19 MHz
 * `APIC timer`, resolution ~ 1 microsecond
 * `ACPI PM timer`_
@@ -34,7 +34,19 @@ x86 timers and counters
 * `TSC`_ (time stamp counter)
 * `PTP`_ clock in network interface card(s)
 
+
+RTC
 ---
+
+* Keeps the system date and time
+* Has an alternative power source (lithium battery or a supercapacitor)
+* Frequency: 32768 Hz
+* Precision: 1 second
+* Typical accuracy: 5 parts per million (a second in 2.3 days)
+
+
+----
+
 
 8254 PIT
 --------
