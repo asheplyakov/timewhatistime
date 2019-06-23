@@ -103,19 +103,22 @@ Not suitable as (microsecond precision) timestamp source for benchmarks
 TSC
 ---
 
-* A 64-bit counter auto-incremented on each CPU cycle...
-* The value can be read with a single non-privileged instruction `rdtsc`
+Initially TSC was a 64 bit counter auto-incremented on each CPU cycle.
+The value can be read with a single non-privileged instruction `rdtsc`
 
 However
 
-* Early CPUs (mid 2000th) always incremented TSC every clock cycle, thus the timer frequency varied due to power management features
+* In early multi-processor systems TSCs of different CPUs are not synchornized at all
+* CPU frequency scaling made the timer frequency non-constant
 * TSC might stop when CPU enters a low-energy state
 * TSC might be reset when CPU exits a low-energy state
-* `rdtsc` instruction can be executed speculatively
 
-Modern x86 CPUs (Intel: Core 2, Xeon, Atom and newer, AMD: Barcelona/Phenom
-and newer) feature a constant rate TSC (typically driven by memory interconnect
-bus, such as QPI or HyperTransport)
+Most of these problems have been solved and modern x86 CPUs (Intel: Core 2, Xeon,
+Atom and newer, AMD: Barcelona/Phenom and newer) feature a constant rate TSC (typically
+driven by memory interconnect bus, such as QPI or HyperTransport). However
+
+* older CPUs are still around
+* `rdtsc` can be executed speculatively just like any other instruction
 
 ----
 
