@@ -43,7 +43,6 @@ x86 timers and counters
 * `ACPI PM timer`_
 * `HPET`_ (high precision event timer)
 * `TSC`_ (time stamp counter)
-* `PTP`_ clock in network interface card(s)
 * `Virtualization and timers`_
 
 
@@ -383,7 +382,7 @@ Picking a right timer for benchmarks
 Benchmarks are about measuring time it takes to do something.
 
 Millisecond resolution is good enough
-------------------------------------
+-------------------------------------
 
 - Make sure to NOT set clock during the benchmark
 - (temporarily) disable the time synchronization (NTP, PTP, etc)
