@@ -99,6 +99,26 @@ systems were APIC_ (advanced programmable interrupt controller) architectures.
 .. _APIC: https://en.wikipedia.org/wiki/Advanced_Programmable_Interrupt_Controller
 
 
+ACPI PM timer
+-------------
+
+Advanced Configuration and Power Interface (ACPI) has been designed to
+replace `MPS`, `APM`, and `PnP BIOS` specifications. First released in 1996.
+
+ACPI specification requires `Power Management Timer`: a timer with a stable
+frequency (not affected by CPU frequency, power saving, etc)
+
+* Typical frequency: 3.759545 MHz
+* 32-bit counter
+
+However
+
+* Does not generate periodic interrupts
+* Does not generate one-shot interrupts
+* Access method: IO ports
+* Tricky discovery via ACPI
+
+
 ----
 
 HPET
