@@ -20,7 +20,7 @@ Mechanical resonance of a vibrating crystal of `piezoelectric`_ material
 (typically quartz) creates an electrical signal with a precise frequency.
 
 * Common frequencies: 30 kHz -- 200 MHz
-* Frequency drift: 10**-5 -- 10**-12
+* Accuracy: :math:`10^{-5} \ldots 10^{-12}`
 
 .. _piezoelectric: https://en.wikipedia.org/wiki/Piezoelectricity
 
