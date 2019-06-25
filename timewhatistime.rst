@@ -218,6 +218,7 @@ Note: just because the structure stores the fractional part as nanoseconds
 To find out the clock resolution use
 
 .. code:: C
+
    int clock_getres(clockid_t clk_id, struct timespec *tp);
 
 (and take the result with a grain of salt).
@@ -232,6 +233,7 @@ To find out the clock resolution use
 * ``CLOCK_PROCESS_CPUTIME_ID`` -- CPU time consumed by all threads of the process
 
 .. code:: C
+
    #define _GNU_SOURCE
    #include <time.h>
    #include <sys/types.h>
@@ -293,7 +295,7 @@ To find out the clock resolution use
 
 
 C++: std::chrono
-----------------
+================
 
 * `std::chrono::system_clock` -- system wall clock
 * `std::chrono::steady_clock` -- monotonic clock, constant interval between ticks
@@ -341,7 +343,7 @@ C++: std::chrono
 
 
 Beware
-~~~~~~
+------
 
 `steady_clock` as implemented in GCC C++ runtime uses ``CLOCK_MONOTONIC``,
 which is affected by `adjtime`. Thus interval between ticks is not constant
@@ -409,6 +411,7 @@ Clock sanity checklist
 #. Verify that current clocksource is TSC
 
    .. code:: bash
+
       $ cat /sys/devices/system/clocksource/clocksource0/current_clocksource
       tsc
 
