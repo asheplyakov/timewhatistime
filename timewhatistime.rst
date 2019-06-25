@@ -28,15 +28,16 @@ Mechanical resonance of a vibrating crystal of `piezoelectric`_ material
 Parameters
 ----------
 
-* Precision (also known as resolution): minimal time between two ticks
+* Resolution: minimal time between two ticks
 * Latency: the time it takes to read the timer value
-* Accuracy: possible deviation of measured value the true one
+* Accuracy: possible deviation of measured value from the true one
+* Precision: the numer of digits/bits in the measured value
 
 
 x86 timers and counters
 =======================
 
-* Real Time Clock (`RTC`_), precision = 1 second
+* Real Time Clock (`RTC`_), resolution = 1 second
 * `8254 PIT`_ (programmable interval timer), frequency 105/88 = 1.19 MHz
 * `APIC timer`, resolution ~ 1 microsecond
 * `ACPI PM timer`_
@@ -214,7 +215,7 @@ UNIX like OSes hide the platform pecularites and provide
    int clock_gettime(clockid_t clk_id, struct timespec *tp);
 
 Note: just because the structure stores the fractional part as nanoseconds
-**DOES NOT** mean the API guarantees the nanosecond precision and/or accuracy.
+**DOES NOT** mean the API guarantees the nanosecond resolution and/or accuracy.
 To find out the clock resolution use
 
 .. code:: C
@@ -381,15 +382,15 @@ Picking a right timer for benchmarks
 
 Benchmarks are about measuring time it takes to do something.
 
-Millisecond precision is good enough
+Millisecond resolution is good enough
 ------------------------------------
 
 - Make sure to NOT set clock during the benchmark
 - (temporarily) disable the time synchronization (NTP, PTP, etc)
 
 
-Acheiving microsecond accuracy
-------------------------------
+Acheiving microsecond resolution 
+--------------------------------
 
 * The only timer which **MIGHT** be suitable is `TSC` (on x86 platform)
 
