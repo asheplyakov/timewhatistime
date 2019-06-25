@@ -9,6 +9,7 @@ Synopsis
 * `x86 timers and counters`_
 * `OS interfaces`_
 * `C++: std::chrono`_
+* `Java`_
 * `Picking a right timer for benchmarks`_
 
 
@@ -333,6 +334,32 @@ Beware
 `steady_clock` as implemented in GCC C++ runtime uses ``CLOCK_MONOTONIC``,
 which is affected by `adjtime`. Thus interval between ticks is not constant
 if time synchronization software is running.
+
+
+Java
+====
+
+
+System.currentTimeMillis()
+--------------------------
+
+* Number of milliseconds since UNIX epoch (January 1, 1970 UTC)
+* Actual resolution may be more coarse
+
+
+System.nanoTime()
+-----------------
+
+* Number of nanoseconds since some arbitrary origin (may be in the future)
+* Not necessarily nanosecond resosution
+* The resolution is at least as good as that of `currentTimeMillis`
+
+
+Pitfals
+-------
+
+OpenJDK implements `nanoTime` with `clock_gettime(CLOCK_MONOTONIC, ...)`,
+which is a subject of NTP adjustments
 
 
 Picking a right timer for benchmarks
