@@ -43,6 +43,7 @@ x86 timers and counters
 * `HPET`_ (high precision event timer)
 * `TSC`_ (time stamp counter)
 * `PTP`_ clock in network interface card(s)
+* `Virtualization and timers`_
 
 
 RTC
@@ -167,6 +168,17 @@ driven by memory interconnect bus, such as QPI or HyperTransport). However
 * `rdtsc` can be executed speculatively just like any other instruction
 
 ----
+
+
+Virtualization and timers
+-------------------------
+
+* All timers except TSC are simulated by the hypervisor
+  (thus the hypervisor thread simulating timers can be pre-emptied by the host OS)
+* Paranoid hypervisor block `rdtsc` instruction in guest mode
+* VM can be suspended, (live) migrated -- even TSC is not stable any more
+
+Basically no luck with microsecond measurements
 
 
 OS interfaces
