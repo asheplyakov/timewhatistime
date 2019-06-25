@@ -24,6 +24,14 @@ Mechanical resonance of a vibrating crystal of `piezoelectric`_ material
 .. _piezoelectric: https://en.wikipedia.org/wiki/Piezoelectricity
 
 
+Parameters
+----------
+
+* Precision (also known as resolution): minimal time between two ticks
+* Latency: the time it takes to read the timer value
+* Accuracy: possible deviation of measured value the true one
+
+
 x86 timers and counters
 =======================
 
@@ -65,26 +73,39 @@ Each counter can operate in one of six modes
 * device communicates the event via an interrupt
 * the device might be in use by the OS scheduler
 
+Introduced with Intel 8086 CPUs (in 1978).
+
 
 ----
 
 APIC timer
 ----------
 
+In 1994 Intel releassed the MultiProcessor Specification (`MPS`) to allow
+construction of multi-processor i386 systems. Early x86 multi-processor
+systems were APIC_ (advanced programmable interrupt controller) architectures.
+
 * Local APIC timer is hardwared to each CPU core
 * Ticks at (some of) local CPU frequency
 * 2 modes: periodic and one-shot
 
+* Software has no reliable way to discover the timer frequency (even in the kernel mode)
 * Timer frequency is not constant
 * Timers of different CPU cores are not synchronized
 * Device communicates the result via an interrupt
 * Sometimes buggy at the silicon level
-* Tricky discovery via ACPI
+* Tricky discovery via MPS tables or ACPI
 
----
+.. _APIC: https://en.wikipedia.org/wiki/Advanced_Programmable_Interrupt_Controller
+
+
+----
 
 HPET
 ----
+
+To resolve APIC timer problems Intel and Microsoft designed a `High Precision Event Timer`
+specification circa 2002. It has been incorporated into PS chipsets since 2005.
 
 * 64-bit up-counter and (at least) 3 comparators
 * comparator can generate an interrupt when the least significant bits equal
@@ -94,21 +115,22 @@ HPET
 * programmed via memory mapped I/O
 
 
-* Typical implementations run the counter at about 18 MHz and require 1 -- 2 microseconds to read the value
-* Comparators tests for equality rather than "greater or equal" so it's easy to miss an interrupt
+* Typical frequency: 14.318 MHz (12x the standard 8254 frequency)
+* Typical counter latency: 1 -- 2 microsecond
+* Missed interrupt if the target time has passed when writing to the chip register
+  (comparators tests for equality rather than "greater or equal")
 * Requires ring 0 privileges to read/program the device
 * Tricky detection via ACPI
-
-Not suitable as (microsecond precision) timestamp source for benchmarks
 
 
 TSC
 ---
 
+All x86 CPUs since Pentium (1993) are equipped with `Time Stamp Counter`.
 Initially TSC was a 64 bit counter auto-incremented on each CPU cycle.
-The value can be read with a single non-privileged instruction `rdtsc`
+The value can be read with a single non-privileged instruction `rdtsc`.
 
-However
+Multi-processor systems and power management features made TSC tricky:
 
 * In early multi-processor systems TSCs of different CPUs are not synchornized at all
 * CPU frequency scaling made the timer frequency non-constant
@@ -119,7 +141,8 @@ Most of these problems have been solved and modern x86 CPUs (Intel: Core 2, Xeon
 Atom and newer, AMD: Barcelona/Phenom and newer) feature a constant rate TSC (typically
 driven by memory interconnect bus, such as QPI or HyperTransport). However
 
-* older CPUs are still around
+* Older CPUs are still around
+* The frequency of TSC differs from the CPU maximal frequency
 * `rdtsc` can be executed speculatively just like any other instruction
 
 ----
