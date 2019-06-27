@@ -39,7 +39,7 @@ x86 timers and counters
 
 * Real Time Clock (`RTC`_), resolution = 1 second
 * `8254 PIT`_ (programmable interval timer), frequency 105/88 = 1.19 MHz
-* `APIC timer`, resolution ~ 1 microsecond
+* `APIC timer`_, resolution ~ 1 microsecond
 * `ACPI PM timer`_
 * `HPET`_ (high precision event timer)
 * `TSC`_ (time stamp counter)
