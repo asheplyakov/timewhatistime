@@ -83,7 +83,7 @@ Introduced with Intel 8086 CPUs (in 1978).
 APIC timer
 ----------
 
-In 1994 Intel releassed the MultiProcessor Specification (`MPS`) to allow
+In 1994 Intel released the MultiProcessor Specification (`MPS`) to allow
 construction of multi-processor i386 systems. Early x86 multi-processor
 systems were APIC_ (advanced programmable interrupt controller) architectures.
 
@@ -127,7 +127,7 @@ HPET
 ----
 
 To resolve APIC timer problems Intel and Microsoft designed a `High Precision Event Timer`
-specification circa 2002. It has been incorporated into PS chipsets since 2005.
+specification circa 2002. It has been incorporated into PC chipsets since 2005.
 
 * 64-bit up-counter and (at least) 3 comparators
 * comparator can generate an interrupt when the least significant bits equal
@@ -365,7 +365,7 @@ System.nanoTime()
 -----------------
 
 * Number of nanoseconds since some arbitrary origin (may be in the future)
-* Not necessarily nanosecond resosution
+* Not necessarily nanosecond resolution
 * The resolution is at least as good as that of `currentTimeMillis`
 
 
